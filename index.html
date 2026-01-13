@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holy Blood - Community Manager</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0f172a; /* Dark Blue/Slate Background */
+            --card-bg: #1e293b;
+            --text-color: #e2e8f0;
+            --accent-color: #38bdf8; /* Light Blue Accent */
+            --secondary-accent: #22c55e; /* Green for stats */
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: #0f172a;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        .btn:hover { background: #fff; }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #334155;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Mobile Menu Button */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-text .role {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hero-img-box {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+        
+        .hero-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .utc-time {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        /* --- INTRODUCTION --- */
+        .intro-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+        }
+
+        /* --- ABOUT --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .stats-box {
+            display: flex;
+            gap: 20px;
+            flex-direction: column;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary-accent);
+        }
+
+        /* --- RESUME --- */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .resume-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+            transition: transform 0.2s;
+        }
+
+        .resume-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .resume-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .resume-role {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        /* --- SERVICES --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 15px;
+        }
+
+        /* --- PORTFOLIO --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            position: relative;
+            height: 250px;
+            background: #334155;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .project-card h3 { z-index: 2; position: relative; }
+        
+        /* --- CONTACT --- */
+        .contact {
+            text-align: center;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* Simplified for mobile example */
+            .menu-toggle { display: block; }
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .about-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Holy Blood.</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#resume">Resume</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Portfolios</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="menu-toggle">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <span class="role">Community Manager & Community Builder</span>
+                <h1>Hi, I am <span style="color:var(--accent-color)">Holy Blood</span></h1>
+                <p>My name is Holy Blood. I’m an experienced community manager with 2 years of successfully 
+                    growing and managing online communities across multiple projects. 
+                    I am skilled in engagement, content creation and platform management (Discord, Telegram). 
+                    I recently added on-chain analysis to my skill set, 
+                    offering deeper insights into user behavior and community health.</p>
+                <div class="utc-time">Timezone: UTC +1</div>
+                <br>
+                <a href="#contact" class="btn">Let's Talk</a>
+            </div>
+            <div class="hero-img-box">
+                <img src="profile.jpg" alt="Holy Blood Profile">
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="intro-text">
+                <h2>Introduction</h2>
+                <p>Hi from Holy Blood, an experienced community manager. Driving meaningful connections in the digital realm.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-grid">
+                <div>
+                    <h3>Driving Web3 projects' Success, One Campaign at a Time!</h3>
+                    <p>My name is Holy Blood, and I’m an experienced Community Manager with 2 years of building, growing, and engaging vibrant online communities in the Web3 ecosystem. I have successfully managed communities across multiple blockchain projects, driving user retention, improving engagement, and fostering strong relationships between users and project teams.
+
+I specialize in community engagement, content creation, and platform management across Telegram and Discord, ensuring that community spaces stay organized, active, and aligned with project goals.</p>
+                    <br>
+                    <p>Recently, I expanded my expertise into on-chain analysis, allowing me to interpret user behavior, track community activity on-chain, and provide deeper insights that support strategic decisions, community health, and growth strategies.</p>
+                </div>
+                <div class="stats-box">
+                    <div class="stat-card">
+                        <span class="stat-number">2+</span>
+                        <p>Years of Experience</p>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">50K+</span>
+                        <p>Users onboarded for multiple projects on 5 chains</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resume">
+        <div class="container">
+            <h2>Resume</h2>
+            <div class="resume-grid">
+                <div class="resume-card">
+                    <h3>Puffverse - RONIN</h3>
+                    <span class="resume-role">Ambassador</span>
+                    <p>Interacting with Puffverse account on X and created contents on latest updates and announcements. <br> 
+Created visual contents that guide users on how to use the Puffverse and PuffGo app</p>
+                </div>
+                <div class="resume-card">
+                    <h3>Water Drop Protocol</h3>
+                    <span class="resume-role">Community Manager</span>
+                    <p>Grew Telegram community to nearly 4,000 members and Twitter following to 10,000+. <br>
+Supported a successful 4-phase presale campaign through consistent engagement and community-driven marketing. <br>
+Managed daily content, community updates  and feedback loops across platforms.</p>
+                </div>
+                <div class="resume-card">
+                    <h3>ETH Wolves</h3>
+                    <span class="resume-role">Community Manager</span>
+                    <p>Helped grow Telegram to 2,000+ members and Twitter to   over 15,000 followers. <br>
+Actively supporting a live presale with strong community momentum and real-time moderation. <br>
+Coordinate announcements, address community questions and organize engagement events.</p>
+                </div>
+                <div class="resume-card">
+                    <h3>Causevest</h3>
+                    <span class="resume-role">Community Manager</span>
+                    <p>Ensure smooth and respectful conversations across Discord and Telegram. <br> 
+Assist users with voting, bounty and guiding users.</p>
+                </div>
+                <div class="resume-card">
+                    <h3>Palladium</h3>
+                    <span class="resume-role">Community Manager</span>
+                    <p>Grew Telegram to 500 membersand Twitter to 1,000+ through engagement and clear updates.</p>
+                </div>
+                <div class="resume-card" style="border-left-color: var(--secondary-accent);">
+                    <h3>Chooky Records</h3>
+                    <span class="resume-role">Community Raider</span>
+                    <p>Actively promoted Chooky Records on X (Twitter) and Telegram to increase visibility and community growth. <br>
+Participated in coordinated raids, helping boost post engagement through likes comments and tweet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2>My Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Web3 Marketer</h3>
+                    <p>Providing expert Web3 marketing services, specializing in project growth, community building, and brand exposure across DeFi, NFTs, and blockchain ecosystems.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Content Creator</h3>
+                    <p>My approach focuses on Web3 content creation, specializing in translating complex blockchain concepts into clear, engaging, and high-quality content that educates users and supports the growth of projects.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Project Management</h3>
+                    <p>I specialize in guiding Web3 projects from concept to launch, ensuring seamless coordination between development, marketing, and community teams.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="container">
+            <h2>Featured Projects</h2>
+            <div class="portfolio-grid">
+                <div class="project-card">
+                    <h3>Puffverse - RONIN</h3>
+                    <p>Ambassador</p>
+                </div>
+                <div class="project-card">
+                    <h3>ETH Wolves</h3>
+                    <p>Community Manager</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Let's Work Together!</h2>
+            <p>Ready to take your project to the next level?</p>
+            <br>
+            <a href="https://t.me/holyblood999" target="_blank" class="btn">Telegram</a>
+             <a href="https://x.com/sangius_sanctus" target="_blank" class="btn">Twitter</a>
+              <a href="mailto:holybcrypto@gmail.com" class="btn">Email Me</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Holy Blood. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple script to toggle mobile menu if you expand on it
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '70px';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = '#0f172a';
+                navLinks.style.padding = '20px';
+            }
+        });
+    </script>
+
+</body>
+</html>
+
